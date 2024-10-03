@@ -14,7 +14,7 @@
 
     <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
     <script src="dist/handlebars.templates-K7URE6B4.js"></script>
-    <script src="dist/sidebar_items-DA49DB11.js"></script>
+    <script src="dist/sidebar_items-A8C38CCE.js"></script>
     <script src="docs_config.js"></script>
     <script async src="dist/html-YIPIRHGU.js"></script>
 
@@ -148,7 +148,7 @@ Pages
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#prepare_filename/3" data-no-tooltip translate="no">prepare_filename(path, out_folder, extension \\ &quot;.png&quot;)</a>
+        <a href="#filepath/3" data-no-tooltip translate="no">filepath(path, out_folder, extension \\ &quot;.png&quot;)</a>
 
       </div>
 
@@ -209,7 +209,7 @@ Pages
 
     <div class="summary-row">
       <div class="summary-signature">
-        <a href="#split_multimedia/3" data-no-tooltip translate="no">split_multimedia(file_path, output_dir, time)</a>
+        <a href="#split_multimedia/3" data-no-tooltip translate="no">split_multimedia(file_path, out_folder, time)</a>
 
       </div>
 
@@ -254,7 +254,7 @@ Pages
 
   <section class="docstring">
 
-<p>  ffmpeg function for concatenating video/audio samples</p><p>  create filelist first (see <a href="FileListCreator.html"><code class="inline">FileListCreator</code></a> module)</p><h2 id="concat_multimedia/2-parameters" class="section-heading">
+<p>  ffmpeg function for concatenating video/audio samples</p><p>  create filelist first (see <a href="FileListCreator.html"><code class="inline">FileListCreator</code></a> module)</p><p>  -y is for always overwrite</p><h2 id="concat_multimedia/2-parameters" class="section-heading">
   <a href="#concat_multimedia/2-parameters" class="hover-link">
     <i class="ri-link-m" aria-hidden="true"></i>
   </a>
@@ -263,24 +263,24 @@ Pages
 <ul><li>filelist_path: path to file_list.txt.</li><li>out_path: output concatenated video/audio file (e.g. output.ts/output.mp3).</li></ul>
   </section>
 </section>
-<section class="detail" id="prepare_filename/3">
+<section class="detail" id="filepath/3">
 
-    <span id="prepare_filename/2"></span>
+    <span id="filepath/2"></span>
 
   <div class="detail-header">
-    <a href="#prepare_filename/3" class="detail-link" data-no-tooltip title="Link to this function">
+    <a href="#filepath/3" class="detail-link" data-no-tooltip title="Link to this function">
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">prepare_filename(path, out_folder, extension \\ &quot;.png&quot;)</h1>
+    <h1 class="signature" translate="no">filepath(path, out_folder, extension \\ &quot;.png&quot;)</h1>
 
 
   </div>
 
   <section class="docstring">
 
-<p>  prepare filename accroding to hash and out folder with extension</p><h2 id="prepare_filename/3-parameters" class="section-heading">
-  <a href="#prepare_filename/3-parameters" class="hover-link">
+<p>  prepare filename accroding to hash and out folder with extension</p><h2 id="filepath/3-parameters" class="section-heading">
+  <a href="#filepath/3-parameters" class="hover-link">
     <i class="ri-link-m" aria-hidden="true"></i>
   </a>
   <span class="text">Parameters</span>
@@ -343,7 +343,8 @@ Pages
 
   <section class="docstring">
 
-<p>  ffmpeg extract images from video by specified fps</p><p>  supply the whole video, you may want to use concat function first</p>
+<p>  ffmpeg extract images from video by specified fps</p><p>  supply list of video files</p><p>  returns list of commands, suitable to be suplied for <a href="Runner.html"><code class="inline">Runner</code></a> parallel running</p><p>  ## Parameters
+  Hash containing:</p><ul><li>video (list of video files paths)</li><li>outfolder</li><li>fps</li></ul>
   </section>
 </section>
 <section class="detail" id="save_video/2">
@@ -400,7 +401,7 @@ Pages
       <i class="ri-link-m" aria-hidden="true"></i>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature" translate="no">split_multimedia(file_path, output_dir, time)</h1>
+    <h1 class="signature" translate="no">split_multimedia(file_path, out_folder, time)</h1>
 
 
   </div>
