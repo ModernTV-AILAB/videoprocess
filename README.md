@@ -1,6 +1,6 @@
 [![Documentation](https://img.shields.io/badge/docs-available-brightgreen.svg)](https://moderntv-ailab.github.io/videoprocess/)
 [![GitHub repo](https://img.shields.io/badge/GitHub-Repository-blue)](https://github.com/ModernTV-AILAB/videoprocess)
-[![GitHub Actions Status](https://github.com/johndoe/my-awesome-project/actions/workflows/test.yml/badge.svg)](https://github.com/ModernTV-AILAB/videoprocess/actions)
+[![GitHub Actions Status](https://github.com/ModernTV-AILAB/videoprocess/actions/workflows/test.yml/badge.svg)](https://github.com/ModernTV-AILAB/videoprocess/actions)
 
 
 
