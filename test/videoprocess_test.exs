@@ -18,23 +18,23 @@ defmodule VideoprocessTest do
 
   test "split multimedia" do
     assert Videoprocess.split_multimedia("tady/je/video.ts", "tady/chcisplity", 10) ==
-             "ffmpeg -i tady/je/video.ts -c copy -map 0 -f segment -segment_time 10 -reset_timestamps 1 tady/chcisplity/video%03d.ts"
+             "ffmpeg -i tady/je/video.ts -c copy -map 0 -f segment -segment_time 10 -reset_timestamps 1 tady/chcisplity/video_%04d.ts"
   end
 
   test "concat multimedia command (video)" do
     assert Videoprocess.concat_multimedia("tady/je/file_list.txt", "tady/chci/concat.ts") ==
-             "ffmpeg -f concat -safe 0 -i tady/je/file_list.txt -c copy tady/chci/concat.ts"
+             "ffmpeg -f concat -safe 0 -i tady/je/file_list.txt -c copy tady/chci/concat.ts -y"
   end
 
   test "prepare filename" do
     assert "testovaci_filename/104040-idk"
-           |> Videoprocess.prepare_filename("testovaci/out/folder", ".png") ==
-             "testovaci/out/folder/104040_%04d.png"
+           |> Videoprocess.filepath("testovaci/out/folder", ".png") ==
+             "testovaci/out/folder/104040-idk_%04d.png"
   end
 
   test "save images one video" do
     assert Videoprocess.save_images("tady/je/104040-idk", "tam/mas/out", 1) ==
-             "ffmpeg -i tady/je/104040-idk -vf 'fps=1' tam/mas/out/104040_%04d.png"
+             "ffmpeg -i tady/je/104040-idk -vf 'fps=1' tam/mas/out/104040-idk_%04d.png"
   end
 
   test "save images more video video" do
@@ -43,8 +43,8 @@ defmodule VideoprocessTest do
              outfolder: "tam/mas/out"
            }) ==
              [
-               "ffmpeg -i tady/je/1-idk.ts -vf 'fps=1' tam/mas/out/1_%04d.png",
-               "ffmpeg -i tady/je/2-idk.ts -vf 'fps=1' tam/mas/out/2_%04d.png"
+               "ffmpeg -i tady/je/1-idk.ts -vf 'fps=1' tam/mas/out/1-idk_%04d.png",
+               "ffmpeg -i tady/je/2-idk.ts -vf 'fps=1' tam/mas/out/2-idk_%04d.png"
              ]
   end
 end

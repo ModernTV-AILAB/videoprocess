@@ -48,34 +48,6 @@ defmodule Videoprocess do
   end
 
   @doc """
-    split input multimedia into segments of length `time` seconds
-
-  ## Parameters
-    - file_path: path to input video/audio.
-    - out_dir: output directory without filename.
-    - extension: (.mp3|.aac|.wav|.ogg)
-
-  """
-  def split_multimedia(file_path, output_dir, time) do
-    "ffmpeg -i #{file_path} -c copy -map 0 -f segment -segment_time #{time} -reset_timestamps 1 #{output_dir}/#{Path.rootname(Path.basename(file_path))}%03d#{Path.extname(file_path)}"
-  end
-
-  @doc """
-    ffmpeg function for concatenating video/audio samples
-
-    create filelist first (see `FileListCreator` module)
-
-  ## Parameters
-
-    - filelist_path: path to file_list.txt.
-    - out_path: output concatenated video/audio file (e.g. output.ts/output.mp3).
-
-  """
-  def concat_multimedia(filelist_path, out_path) do
-    "ffmpeg -f concat -safe 0 -i #{filelist_path} -c copy #{out_path}"
-  end
-
-  @doc """
     prepare filename accroding to hash and out folder with extension
 
   ## Parameters
@@ -87,16 +59,53 @@ defmodule Videoprocess do
     output is: out_folder/1050440.png
 
   """
-  def prepare_filename(path, out_folder, extension \\ ".png") do
-    [_, stamp] = Regex.run(~r/(\d+)-/, Path.basename(path))
+  def filepath(path, out_folder, extension \\ ".png") do
+    out_folder <> "/" <> Path.rootname(Path.basename(path)) <> "_%04d" <> extension
+  end
 
-    out_folder <> "/" <> stamp <> "_%04d" <> extension
+  @doc """
+    split input multimedia into segments of length `time` seconds
+
+  ## Parameters
+    - file_path: path to input video/audio.
+    - out_dir: output directory without filename.
+    - extension: (.mp3|.aac|.wav|.ogg)
+
+  """
+  def split_multimedia(file_path, out_folder, time) do
+    # "ffmpeg -i #{file_path} -c copy -map 0 -f segment -segment_time #{time} -reset_timestamps 1 #{output_dir}/#{Path.rootname(Path.basename(file_path))}%03d#{Path.extname(file_path)}"
+    "ffmpeg -i #{file_path} -c copy -map 0 -f segment -segment_time #{time} -reset_timestamps 1 #{filepath(file_path, out_folder, Path.extname(file_path))}"
+  end
+
+  @doc """
+    ffmpeg function for concatenating video/audio samples
+
+    create filelist first (see `FileListCreator` module)
+
+    -y is for always overwrite
+
+  ## Parameters
+
+    - filelist_path: path to file_list.txt.
+    - out_path: output concatenated video/audio file (e.g. output.ts/output.mp3).
+
+  """
+  def concat_multimedia(filelist_path, out_path) do
+    "ffmpeg -f concat -safe 0 -i #{filelist_path} -c copy #{out_path} -y"
   end
 
   @doc """
     ffmpeg extract images from video by specified fps
 
-    supply the whole video, you may want to use concat function first
+    supply list of video files
+
+    returns list of commands, suitable to be suplied for `Runner` parallel running
+
+    ## Parameters
+    Hash containing:
+    - video (list of video files paths)
+    - outfolder
+    - fps
 
   """
   def save_images_map(%{video: video_files, outfolder: outfolder, fps: fps}) do
@@ -118,7 +127,7 @@ defmodule Videoprocess do
 
   """
   def save_images(video_file, out_folder, fps) do
-    path = video_file |> prepare_filename(out_folder, ".png")
+    path = video_file |> filepath(out_folder, ".png")
     "ffmpeg -i #{video_file} -vf 'fps=#{fps}' #{path}"
   end
 

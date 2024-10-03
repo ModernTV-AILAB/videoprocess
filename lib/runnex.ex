@@ -10,9 +10,6 @@ defmodule Runner do
 
     use functions from `Videoprocess` to prepare command
 
-  ## Examples
-
-
   """
   def run_porcelain_command(command) do
     Porcelain.shell(command, out: :string)
@@ -23,13 +20,11 @@ defmodule Runner do
 
     use functions from `Videoprocess` to prepare command
 
-  ## Examples
-
   """
   def run_commands_parallel(commands) do
     commands
     |> Enum.map(&Task.async(fn -> run_porcelain_command(&1) end))
-    |> Task.await_many()
+    |> Task.await_many(:infinity)
   end
 
   @doc """

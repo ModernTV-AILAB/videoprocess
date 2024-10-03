@@ -24,3 +24,8 @@ videoprocess-*.tar
 
 # Temporary files, for example, from tests.
 /tmp/
+
+example/output/*.ts
+example/output/*/*
+!example/output/.gitkeep
+!example/output/*/.gitkeep

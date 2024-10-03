@@ -13,14 +13,17 @@ defmodule FileListCreator do
     https://trac.ffmpeg.org/wiki/Concatenate
 
   """
-  def create_file_list(folder, output) do
-    folder
-    |> list_ts_files()
+  def create_file_list(files, outfun) when is_function(outfun) do
+    files
     |> generate_file_list_content()
-    |> write_to_file(output)
+    |> outfun.()
   end
 
-  defp list_ts_files(folder) do
+  def create_file_list(folder, output) when is_binary(output) do
+    create_file_list(folder, write_to_file(output))
+  end
+
+  def list_ts_files(folder) do
     folder
     |> Path.expand()
     |> Path.join("*.ts")
@@ -33,7 +36,7 @@ defmodule FileListCreator do
     |> Enum.join("\n")
   end
 
-  defp write_to_file(content, output) do
-    File.write(output, content)
+  defp write_to_file(output) do
+    fn content -> File.write(output, content) end
   end
 end

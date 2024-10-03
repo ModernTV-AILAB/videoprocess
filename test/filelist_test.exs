@@ -2,8 +2,14 @@ defmodule FileListTest do
   use ExUnit.Case
 
   test "create file list from dir of files" do
-    FileListCreator.create_file_list("input/one_sample", "input/one_sample/file_list.txt") |> IO.inspect
+    assert FileListCreator.create_file_list(
+             [
+               "example/video1.ts",
+               "example/video2.ts",
+               "another/video3.ts"
+             ],
+             &String.split(&1, "\n")
+           ) ==
+             ["file 'example/video1.ts'", "file 'example/video2.ts'", "file 'another/video3.ts'"]
   end
-
 end
-
