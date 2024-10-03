@@ -1,4 +1,4 @@
-[![Documentation](https://img.shields.io/badge/docs-available-brightgreen.svg)]([https://<username>.github.io/<repository>](https://moderntv-ailab.github.io/videoprocess/))
+[![Documentation](https://img.shields.io/badge/docs-available-brightgreen.svg)](https://moderntv-ailab.github.io/videoprocess/)
 
 
 
