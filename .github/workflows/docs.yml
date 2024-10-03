@@ -1,0 +1,38 @@
+name: Generate and Deploy Docs
+
+on:
+  push:
+    branches:
+      - main  # Change to your default branch name
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the code from the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Setup Elixir/OTP with the erlef/setup-beam action
+      - name: Setup Elixir and OTP
+        uses: erlef/setup-beam@v1
+        with:
+          elixir-version: '1.15'  # Specify the Elixir version you are using
+          otp-version: '26.0'      # Specify the OTP version you are using
+
+      # Install dependencies
+      - name: Install dependencies
+        run: mix deps.get
+
+      # Generate the documentation using mix docs
+      - name: Generate docs
+        run: mix docs
+
+      # Deploy to the gh-pages branch using GitHub Pages Action
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./doc
+          publish_branch: gh-pages
