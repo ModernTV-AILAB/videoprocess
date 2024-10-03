@@ -1,0 +1,38 @@
+name: Elixir CI
+
+on:
+  push:
+    branches:
+      - main  # Runs on push to the 'main' branch; customize as needed
+  pull_request:
+    branches:
+      - main  # Runs on PRs to the 'main' branch
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        elixir: ['1.17.0']  # Define the Elixir version to use
+        otp: ['27.0']       # Define the Erlang/OTP version to use
+
+    steps:
+      # Checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Setup Elixir and Erlang/OTP environment
+      - name: Setup Elixir
+        uses: erlef/setup-beam@v1
+        with:
+          elixir-version: ${{ matrix.elixir }}
+          otp-version: ${{ matrix.otp }}
+
+      # Install dependencies
+      - name: Install dependencies
+        run: mix deps.get
+
+      # Run tests
+      - name: Run tests
+        run: mix test
