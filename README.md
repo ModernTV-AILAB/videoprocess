@@ -36,6 +36,10 @@ mix run example.exs
 
 ---
 
+## Errors
+
+if any error occurs when running Porcelain command, it is logged in log/error.log
+
 # Multimedia Processing with Elixir
 
 This document provides an example of how to use Elixir functions to process video and audio data. Below are the steps to split, concatenate, and extract audio/video/images from multimedia files using Elixir modules and functions.

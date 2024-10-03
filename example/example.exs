@@ -16,7 +16,7 @@ Videoprocess.save_images(Enum.at(files,0), "example/output/images", 1) |> Runner
 
 # extract images from one sample
 # we can supply list of files
-Videoprocess.save_images_map(%{video: files, outfolder: "example/output/imagesmap", fps: 100}) |> Runner.run_commands_parallel
+Videoprocess.save_images_map(%{video: files, outfolder: "example/output/imagesmap", fps: 20}) |> Runner.run_commands_parallel
 
 
 # extract audio only

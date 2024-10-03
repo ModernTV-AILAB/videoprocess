@@ -1,4 +1,6 @@
 defmodule Runner do
+  require Logger
+
   @moduledoc """
     Documentation for `Runner` module.
 
@@ -10,9 +12,16 @@ defmodule Runner do
 
     use functions from `Videoprocess` to prepare command
 
+    Error are logged in log/error.log file using `Logger`
+
   """
   def run_porcelain_command(command) do
-    Porcelain.shell(command, out: :string)
+    result = Porcelain.shell(command, out: :string)
+
+    if result.status != 0 do
+      Logger.error("Command failed: #{command}")
+      Logger.error("Error: #{inspect(result)}")
+    end
   end
 
   @doc """
