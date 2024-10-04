@@ -19,8 +19,8 @@ Videoprocess.save_images(Enum.at(files,0), "example/output/images", 1) |> Runner
 Videoprocess.save_images_map(%{video: files, outfolder: "example/output/imagesmap", fps: 20}) |> Runner.run_commands_parallel
 
 
-# extract audio only
-Videoprocess.save_audio("example/input/input01_ocean.ts", "example/output/audio", ".wav") |> Runner.run_porcelain_command
-
 # extract video only
 Videoprocess.save_video("example/input/input01_ocean.ts", "example/output/video", ".mp4") |> Runner.run_porcelain_command
+
+# extract audio only
+Videoprocess.save_audio("example/input/input01_ocean.ts", "example/output/audio", ".wav") |> Runner.run_porcelain_command

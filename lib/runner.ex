@@ -16,11 +16,14 @@ defmodule Runner do
 
   """
   def run_porcelain_command(command) do
-    result = Porcelain.shell(command, out: :string)
+    # Redirect stderr to stdout in the shell command
+    full_command = "#{command} 2>&1"
 
-    if result.status != 0 do
-      Logger.error("Command failed: #{command}")
-      Logger.error("Error: #{inspect(result)}")
+    result = Porcelain.shell(full_command, out: :string)
+
+    unless result.status == 0 do
+      Logger.error("Command failed with status #{result.status}")
+      Logger.error("Error Output: #{result.out}")
     end
   end
 
