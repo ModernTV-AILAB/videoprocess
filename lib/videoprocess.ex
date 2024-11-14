@@ -109,8 +109,9 @@ defmodule Videoprocess do
 
   """
   def save_images_map(%{video: video_files, outfolder: outfolder, fps: fps}) do
-    Enum.map(video_files, fn video ->
-      save_images(video, outfolder, fps)
+    Enum.with_index(video_files)
+    |> Enum.map(fn {video, index} ->
+      save_images(video, "#{outfolder}/#{index}", fps)
     end)
   end
 
@@ -128,7 +129,7 @@ defmodule Videoprocess do
   """
   def save_images(video_file, out_folder, fps) do
     path = video_file |> filepath(out_folder, ".png")
-    "ffmpeg -i #{video_file} -vf 'fps=#{fps}' #{path}"
+    "mkdir -p #{out_folder} && ffmpeg -i #{video_file} -vf 'fps=#{fps}' #{path}"
   end
 
   @doc """
